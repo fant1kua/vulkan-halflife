@@ -1,13 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\common\interface.cpp" />
-    <ClCompile Include="Renderer.cpp" />
+    <Filter Include="Source Files">
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\common\interface.h" />
-    <ClInclude Include="..\public\IRenderer.h" />
-    <ClInclude Include="Renderer.h" />
-    <ClInclude Include="..\common\windows_common.h" />
+    <ClCompile Include="..\common\interface.cpp">
+	  <Filter>Source Files</Filter>
+	</ClCompile>
+    <ClCompile Include="Renderer.cpp">
+	  <Filter>Source Files</Filter>
+	</ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\common\interface.h">
+	  <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\public\IRenderer.h">
+	  <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+	  <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\windows_common.h">
+	  <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
