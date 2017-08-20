@@ -12,6 +12,7 @@
 #include "IRenderer.h"
 #include <../cl_dll/wrect.h>
 #include <../cl_dll/cl_dll.h>
+#include "windows_common.h"
 
 class CRenderer : public IRenderer
 {

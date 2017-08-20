@@ -8,5 +8,6 @@
     <ClInclude Include="..\common\interface.h" />
     <ClInclude Include="..\public\IRenderer.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="..\common\windows_common.h" />
   </ItemGroup>
 </Project>
