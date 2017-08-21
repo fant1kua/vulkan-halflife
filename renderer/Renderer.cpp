@@ -17,10 +17,15 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CRenderer, IRenderer, RENDERER_INTERFACE_VERSI
 
 CRenderer::CRenderer(void)
 {
+	m_pVulkanLdr = NULL;
 }
 
 CRenderer::~CRenderer(void)
 {
+	if (m_pVulkanLdr != NULL) {
+		delete m_pVulkanLdr;
+		m_pVulkanLdr = NULL;
+	}
 	delete this;
 }
 
@@ -37,6 +42,8 @@ void CRenderer::Start(cl_enginefuncs_s *pEngineFuncs, int iInterfaceVersion, IAp
 		Sys_FatalError("Incompatible client library with renderer library!");
 
 	memcpy(&m_engineFuncs, pEngineFuncs, sizeof(cl_enginefunc_t));
+
+	m_pVulkanLdr = new CVulkanLoader(m_engineFuncs.Con_Printf);
 }
 
 void CRenderer::Shutdown(void)

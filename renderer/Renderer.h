@@ -25,7 +25,7 @@ public:
 	void Shutdown(void);
 
 private:
-	CVulkanLoader m_vulkanLdr;
+	CVulkanLoader *m_pVulkanLdr;
 	cl_enginefunc_t m_engineFuncs;
 };
 
