@@ -84,7 +84,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GAMEUI_EXPORTS;CEGUI_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\common\;..\public\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -104,10 +104,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\interface.h" />
+    <ClInclude Include="..\common\windows_common.h" />
     <ClInclude Include="..\public\IAppSystem.h" />
     <ClInclude Include="..\public\IGameConsole.h" />
     <ClInclude Include="..\public\IGameUI.h" />
     <ClInclude Include="..\public\IMusicManager.h" />
+    <ClInclude Include="..\public\IRenderer.h" />
     <ClInclude Include="GameConsole.h" />
     <ClInclude Include="GameUI.h" />
   </ItemGroup>

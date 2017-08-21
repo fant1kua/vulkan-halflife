@@ -17,6 +17,18 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
+inline void Sys_FatalError(char *pszFormat, ...) {
+	char szBuffer[512];
+	va_list argList;
+
+	va_start(argList, pszFormat);
+	vsprintf_s(szBuffer, pszFormat, argList);
+
+	MessageBox(NULL, szBuffer, "Sys_FatalError()", MB_OK | MB_ICONERROR | MB_SETFOREGROUND);
+
+	va_end(argList);
+	exit(-1);
+}
 
 #endif
 

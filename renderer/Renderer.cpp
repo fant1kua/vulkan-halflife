@@ -6,6 +6,8 @@
 */
 
 #include <iostream>
+#include "vulkanfunctions.h"
+#include "vulkanloader.h"
 #include "Renderer.h"
 #include <Windows.h>
 
@@ -29,7 +31,12 @@ bool CRenderer::Initialize(CreateInterfaceFn *pFactoryList, int iNumFactories)
 
 void CRenderer::Start(cl_enginefuncs_s *pEngineFuncs, int iInterfaceVersion, IAppSystem *system)
 {
-	m_pEngineFuncs = pEngineFuncs;
+	m_engineFuncs = *pEngineFuncs;
+
+	if (iInterfaceVersion != CLDLL_INTERFACE_VERSION)
+		Sys_FatalError("Incompatible client library with renderer library!");
+
+	memcpy(&m_engineFuncs, pEngineFuncs, sizeof(cl_enginefunc_t));
 }
 
 void CRenderer::Shutdown(void)

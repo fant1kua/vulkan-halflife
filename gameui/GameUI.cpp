@@ -6,8 +6,13 @@
 //=================================================================================
 
 #include <iostream>
+#include "interface.h"
+#include "IGameUI.h"
+#include "IRenderer.h"
+#include <../cl_dll/wrect.h>
+#include <../cl_dll/cl_dll.h>
 #include "GameUI.h"
-#include <Windows.h>
+#include "windows_common.h"
 
 #pragma comment(lib, "opengl32.lib")
 
@@ -17,8 +22,12 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CGameUI, IGameUI, GAMEUI_INTERFACE_VERSION, g_
 
 CGameUI::CGameUI(void)
 {
-	m_iScreenWidth = 0;
-	m_iScreenHeight = 0;
+	m_hRendererModule = NULL;
+	m_pRenderer = NULL;
+	m_pFactoryList = NULL;
+	m_iNumFactories = 0;
+
+	memset(&m_engineFuncs, 0, sizeof(cl_enginefunc_t));
 }
 
 CGameUI::~CGameUI(void)
@@ -32,19 +41,30 @@ bool CGameUI::Initialize(CreateInterfaceFn *pFactoryList, int iNumFactories)
 	// factorylist[2] -> FileSystem_Steam.dll
 	// factoryList[3] -> GameUI.dll
 
-	wglMakeCurrent(NULL, NULL);
+	m_pFactoryList = pFactoryList;
+	m_iNumFactories = iNumFactories;
 
 	return true;
 }
 
 void CGameUI::Start(cl_enginefuncs_s *pEngineFuncs, int iInterfaceVersion, IAppSystem *system)
 {
-	m_pEngineFuncs = pEngineFuncs;
+	m_engineFuncs = *pEngineFuncs;
+
+	if (iInterfaceVersion != CLDLL_INTERFACE_VERSION)
+		Sys_FatalError("Incompatible client library with GameUI library!");
+
+	memcpy(&m_engineFuncs, pEngineFuncs, sizeof(cl_enginefunc_t));
+
+	LoadLibRenderer(m_pFactoryList, m_iNumFactories);
+
+	wglMakeCurrent(NULL, NULL);
+	m_pRenderer->Start(pEngineFuncs, iInterfaceVersion, system);
 }
 
 void CGameUI::Shutdown(void)
 {
-
+	FreeLibRenderer();
 }
 
 int CGameUI::ActivateGameUI(void)
@@ -136,16 +156,33 @@ void CGameUI::Unknown4(void *u1, void *u2)
 
 }
 
-void CGameUI::GetFrameConfig(void)
+void CGameUI::LoadLibRenderer(CreateInterfaceFn *factoryList, int numFactories)
 {
-	/*SCREENINFO *pScreenInfo;
+	char szPDir[512];
 
-	m_pEngineFuncs->pfnGetScreenInfo(pScreenInfo);
-	m_pEngineFuncs->pfnGetMousePos(pMousePOINT);
+	if (!m_engineFuncs.COM_ExpandFilename(RENDERER_DLLNAME, szPDir, sizeof(szPDir)))
+		Sys_FatalError("Could not load renderer library!");
 
-	m_iScreenWidth = pScreenInfo->iWidth;
-	m_iScreenHeight = pScreenInfo->iHeight;
+	m_hRendererModule = Sys_LoadModule(szPDir);
 
-	m_flCursorPosX = pMousePOINT->x;
-	m_flCursorPosY = pMousePOINT->y;*/
+	CreateInterfaceFn rendererFactory = Sys_GetFactory(m_hRendererModule);
+	if (!rendererFactory)
+		Sys_FatalError("Could not load factory from renderer library!");
+
+	m_pRenderer = (IRenderer *)rendererFactory(RENDERER_INTERFACE_VERSION, NULL);
+	if (!m_pRenderer)
+		Sys_FatalError("Incorrect renderer library version detected!");
+
+	if (!m_pRenderer->Initialize(factoryList, numFactories))
+		Sys_FatalError("Could not initialize renderer library");
+}
+
+void CGameUI::FreeLibRenderer(void)
+{
+	if (m_pRenderer && m_hRendererModule) 
+	{
+		Sys_FreeModule(m_hRendererModule);
+		m_hRendererModule = 0;
+		m_pRenderer = NULL;
+	}
 }

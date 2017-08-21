@@ -47,5 +47,11 @@
     <ClInclude Include="..\public\IMusicManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\public\IRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\windows_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

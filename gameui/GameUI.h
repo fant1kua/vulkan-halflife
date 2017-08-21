@@ -9,10 +9,6 @@
 #ifndef __GAMEUI_H__
 #define __GAMEUI_H__
 
-#include "IGameUI.h"
-#include <../cl_dll/wrect.h>
-#include <../cl_dll/cl_dll.h>
-
 class CGameUI : public IGameUI
 {
 public:
@@ -44,14 +40,16 @@ public:
 	void Unknown4(void *u1, void *u2);
 
 private:
-	void GetFrameConfig(void);
+	void LoadLibRenderer(CreateInterfaceFn *factoryList, int numFactories);
+	void FreeLibRenderer(void);
 
-	cl_enginefunc_t *m_pEngineFuncs;
+	CreateInterfaceFn *m_pFactoryList;
+	int m_iNumFactories;
 
-	int m_iScreenWidth;
-	int m_iScreenHeight;
-	float m_flCursorPosX;
-	float m_flCursorPosY;
+	HINTERFACEMODULE m_hRendererModule;
+	IRenderer *m_pRenderer;
+
+	cl_enginefunc_t m_engineFuncs;
 };
 
 #endif

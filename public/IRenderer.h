@@ -14,6 +14,16 @@
 #include "interface.h"
 #include "IAppSystem.h"
 
+#ifdef _WIN32
+#define RENDERER_DLLNAME "cl_dlls/Renderer.dll"
+#elif defined(OSX)
+#define RENDERER_DLLNAME "cl_dlls/Renderer.dylib"
+#elif defined(LINUX)
+#define RENDERER_DLLNAME "cl_dlls/Renderer.so"
+#else
+#error
+#endif
+
 class IAppSystem;
 
 class IRenderer : public IBaseInterface

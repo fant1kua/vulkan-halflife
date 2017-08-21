@@ -83,7 +83,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;DEBUG;_WINDOWS;_USRDLL;RENDERER_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_WINDOWS;_USRDLL;RENDERER_EXPORTS;VK_NO_PROTOTYPES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\common\;..\public\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>
@@ -109,12 +109,18 @@
   <ItemGroup>
     <ClCompile Include="..\common\interface.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="vulkanfunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\interface.h" />
     <ClInclude Include="..\common\windows_common.h" />
     <ClInclude Include="..\public\IRenderer.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="vulkanfunctions.h" />
+    <ClInclude Include="vulkanloader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vulkanfunctions.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
