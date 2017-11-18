@@ -26,7 +26,6 @@ CRenderer::~CRenderer(void)
 		delete m_pVulkanLdr;
 		m_pVulkanLdr = NULL;
 	}
-	delete this;
 }
 
 bool CRenderer::Initialize(CreateInterfaceFn *pFactoryList, int iNumFactories)

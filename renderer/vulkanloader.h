@@ -13,7 +13,7 @@
 #include "windows_common.h"
 
 #ifdef WIN32
-#define VULKAN_LIBRARY "vulkan-1.dll"
+#define VULKAN_LIBRARY  "vulkan-1.dll"
 #endif
 
 #define VK_ENGINE_NAME	"vkGoldSrc2017"
@@ -36,10 +36,10 @@ public:
 		
 		loadLibrary();
 		loadGlobalFunctions();
-		loadInstanceFunctions();
-
 		instanceGetExtensions();
+
 		instanceCreate();
+		loadInstanceFunctions();
 	}
 
 	~CVulkanLoader()
@@ -89,6 +89,8 @@ private:
 			Sys_FatalError("Could not load %s from vk library!", #name);
 #endif
 		#include "vulkanfunctions.inl"
+
+
 	}
 
 	void instanceGetExtensions(void)

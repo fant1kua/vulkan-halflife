@@ -50,7 +50,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\..\..\cl_dlls\</OutDir>
     <TargetName>Renderer</TargetName>
-    <IncludePath>C:\VulkanSDK\1.0.57.0\Include\vulkan;$(IncludePath)</IncludePath>
+    <IncludePath>C:\VulkanSDK\1.0.65.0\Include\vulkan;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
